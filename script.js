@@ -1,23 +1,34 @@
 const display = document.getElementById('display')
+const buttonIgual = document.getElementById('btn_=')
+const buttonClear = document.getElementById('btn_c')
+
 let primeiroNumero;
-let segundoNumero;
 let operacaoSelecionada;
-
-
-
-
-setInitialState()
-bindNumeros()
-bindOperacoes()
-
-
 
 function setInitialState() {
     operacaoSelecionada =""
     primeiroNumero = ""
-    segundoNumero = ""
     display.value = ""
     display.placeholder = "0"
+}
+
+function bindElements() {
+    bindHelperButtons()
+    bindNumeros()
+    bindOperacoes()
+}
+
+function bindHelperButtons() {
+    buttonIgual.addEventListener('click', clicouButtonIgual)
+    buttonClear.addEventListener('click', clicouButtonClear)
+}
+
+
+function bindOperacoes() {
+    const operacoesContainer = document.getElementById('operacoes')  
+    for(const btnOperacao of operacoesContainer.children) {
+        btnOperacao.addEventListener('click', clickOperacaoBtnEvent)
+    }
 }
 
 function bindNumeros() {
@@ -26,6 +37,8 @@ function bindNumeros() {
         btn.addEventListener('click', clickNumberBtnEvent)
     }
 }
+
+
 
 function clickNumberBtnEvent(event) {
     const btnText = event.target.innerText
@@ -38,21 +51,11 @@ function clickAtBtn(number) {
 }
     
 
-
-function bindOperacoes() {
-    const operacoesContainer = document.getElementById('operacoes')  
-    for(const btnOperacao of operacoesContainer.children) {
-        btnOperacao.addEventListener('click', clickOperacaoBtnEvent)
-    }
-}
-
 function clickOperacaoBtnEvent(event) {
     operacaoSelecionada = event.target.innerText
     setBtnStateTOSelected(event.target, true)
     saveDisplayToPrimeiroNumero()
 }
-
-
 
 
 function saveDisplayToPrimeiroNumero() {
@@ -61,8 +64,23 @@ function saveDisplayToPrimeiroNumero() {
     display.placeholder = primeiroNumero
 }
 
-const buttonIgual = document.getElementById('btn_=')
-buttonIgual.addEventListener('click', clicouButtonIgual)
+// Assume que num2 nao vai ser igual a 0
+// quando op for do tipo divisao
+// Fluxo ja tratado na funcao que chama 
+// assume os 4 tipos de operacao basicas +, -, /, *
+function calculateResult(num1, num2, op) {
+
+    if(op === "+"){
+        return num1 + num2 
+    }else if( op === "-") {
+        return num1 - num2 
+    }else if( op === "x") {
+        return num1 * num2
+    } else {
+        return num1 / num2
+    }
+
+}
 
 function clicouButtonIgual() {
 
@@ -71,39 +89,26 @@ function clicouButtonIgual() {
         return
     }
 
-    segundoNumero = display.value
 
-    if(operacaoSelecionada === "+"){
-        let resultado = parseInt(primeiroNumero) + parseInt(segundoNumero)
-        primeiroNumero = resultado
-         
-    }else if( operacaoSelecionada === "-") {
-        let resultado = parseInt(primeiroNumero) - parseInt(segundoNumero)
-        primeiroNumero = resultado
-    }else if( operacaoSelecionada === "x") {
-        let resultado = parseInt(primeiroNumero) * parseInt(segundoNumero)
-        primeiroNumero = resultado
-    } else if(operacaoSelecionada === "/") {
-        const divisor = parseInt(segundoNumero)
-        if (divisor !== 0) {
-            let resultado = parseInt(primeiroNumero) / parseInt(segundoNumero)
-            primeiroNumero = resultado
-        } else {
-            window.alert("Nao é possivel dividir por 0")
-            clicouButtonClear()
-            return
-        }
-        
-    } 
-    
-    
-    display.value = ""
-    display.placeholder = primeiroNumero
-    segundoNumero = ""
+    const num1 = parseInt(primeiroNumero)
+    const num2 = parseInt(display.value)
+
+    if (num2 === 0) {
+        window.alert("Nao é possivel dividir por 0")
+        clicouButtonClear()
+        return
+    }
+
+    runOperation(num1, num2, operacaoSelecionada)
 }
 
-const buttonClear = document.getElementById('btn_c')
-buttonClear.addEventListener('click', clicouButtonClear)
+function runOperation(num1, num2, op) {
+    const resultado = calculateResult(num1, num2, op)
+    primeiroNumero = resultado
+    display.value = ""
+    display.placeholder = primeiroNumero
+}
+
 
 function clicouButtonClear() {
     setInitialState()
@@ -121,4 +126,10 @@ function resetBtnsOperacoesState() {
 function setBtnStateTOSelected(btn, selected) {
     btn.classList.remove(selected ? "btnNotSelected" : "btnSelected")
     btn.classList.add(selected ? "btnSelected" : "btnNotSelected")
+}
+
+
+window.onload = () => {
+    setInitialState()
+    bindElements()
 }
