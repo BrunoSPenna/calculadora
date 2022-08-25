@@ -74,7 +74,14 @@ const buttonIgual = document.getElementById('btn_=')
 buttonIgual.addEventListener('click', clicouButtonIgual)
 
 function clicouButtonIgual() {
+
+    if(operacaoSelecionada === "") {
+        window.alert("selecione um aoperação váida")
+        return
+    }
+
     segundoNumero = display.value
+
     if(operacaoSelecionada === "+"){
         let resultado = parseInt(primeiroNumero) + parseInt(segundoNumero)
         primeiroNumero = resultado
@@ -86,12 +93,18 @@ function clicouButtonIgual() {
         let resultado = parseInt(primeiroNumero) * parseInt(segundoNumero)
         primeiroNumero = resultado
     } else if(operacaoSelecionada === "/") {
-        let resultado = parseInt(primeiroNumero) / parseInt(segundoNumero)
-        primeiroNumero = resultado
-    }
+        const divisor = parseInt(segundoNumero)
+        if (divisor !== 0) {
+            let resultado = parseInt(primeiroNumero) / parseInt(segundoNumero)
+            primeiroNumero = resultado
+        } else {
+            window.alert("Nao é possivel dividir por 0")
+            clicouButtonClear()
+            return
+        }
+        
+    } 
     
-    
-
     
     display.value = ""
     display.placeholder = primeiroNumero
