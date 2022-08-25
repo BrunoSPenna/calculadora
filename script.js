@@ -35,6 +35,29 @@ function clicouButtonSoma() {
    display.placeholder = primeiroNumero
 }
 
+const buttonSubtracao = document.getElementById('btn_-')
+buttonSubtracao.addEventListener('click', clicouButtonSubtracao)
+
+function clicouButtonSubtracao( ) {
+    window.alert("subtraçao")
+}
+
+const buttonMultiplicacao = document.getElementById('btn_x')
+buttonMultiplicacao.addEventListener('click', clicouButtonMultiplicacao)
+
+function clicouButtonMultiplicacao() {
+    window.alert("multiplicaçao")
+}
+
+const buttonDivisao = document.getElementById('btn_/')
+buttonDivisao.addEventListener('click', clicouButtonDivisao)
+
+function clicouButtonDivisao() {
+    window.alert("divisão")
+
+}
+
+
 const buttonIgual = document.getElementById('btn_=')
 buttonIgual.addEventListener('click', clicouButtonIgual)
 
