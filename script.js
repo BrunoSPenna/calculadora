@@ -28,23 +28,18 @@ const buttonSoma = document.getElementById('btn_+')
 buttonSoma.addEventListener('click', clicouButtonSoma)
 
 function clicouButtonSoma() {
-   primeiroNumero = display.value
    operacaoSelecionada = "+"
    setBtnSomaStateToSelectedStyle(true)
-   
-   display.value = ""
-   display.placeholder = primeiroNumero
+   saveDisplayToPrimeiroNumero()
 }
 
 const buttonSubtracao = document.getElementById('btn_-')
 buttonSubtracao.addEventListener('click', clicouButtonSubtracao)
 
 function clicouButtonSubtracao( ) {
-    primeiroNumero = display.value
     operacaoSelecionada = "-"
     setBtnSubtracaoStateToSelectedStyle(true)
-    display.value = ""
-    display.placeholder = primeiroNumero
+    saveDisplayToPrimeiroNumero()
     
 }
 
@@ -52,20 +47,22 @@ const buttonMultiplicacao = document.getElementById('btn_x')
 buttonMultiplicacao.addEventListener('click', clicouButtonMultiplicacao)
 
 function clicouButtonMultiplicacao() {
-    primeiroNumero = display.value
     operacaoSelecionada = "x"
     setBtnMultiplicacaoStateToSelectedStyle(true)
-    display.value = ""
-    display.placeholder = primeiroNumero
+    saveDisplayToPrimeiroNumero()
 }
 
 const buttonDivisao = document.getElementById('btn_/')
 buttonDivisao.addEventListener('click', clicouButtonDivisao)
 
 function clicouButtonDivisao() {
-    primeiroNumero = display.value
     operacaoSelecionada = "/"
     setBtnDivisaoStateToSelectedStyle(true)
+    saveDisplayToPrimeiroNumero()
+}
+
+function saveDisplayToPrimeiroNumero() {
+    primeiroNumero = display.value
     display.value = ""
     display.placeholder = primeiroNumero
 }
@@ -130,18 +127,19 @@ function clicouButtonClear() {
 }
 
 function setBtnSomaStateToSelectedStyle(selected) {
-    buttonSoma.classList.remove(selected ? "btnNotSelected" : "btnSelected")
-    buttonSoma.classList.add(selected ? "btnSelected" : "btnNotSelected")
+    setBtnStateTOSelected(buttonSoma, selected)
 }
 function setBtnSubtracaoStateToSelectedStyle(selected) {
-    buttonSubtracao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
-    buttonSubtracao.classList.add(selected ? "btnSelected" : "btnNotSelected")
+    setBtnStateTOSelected(buttonSubtracao, selected)
 }
 function setBtnMultiplicacaoStateToSelectedStyle(selected) {
-    buttonMultiplicacao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
-    buttonMultiplicacao.classList.add(selected ? "btnSelected" : "btnNotSelected")
+    setBtnStateTOSelected(buttonMultiplicacao, selected)
 }
 function setBtnDivisaoStateToSelectedStyle(selected) {
-    buttonDivisao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
-    buttonDivisao.classList.add(selected ? "btnSelected" : "btnNotSelected")
+    setBtnStateTOSelected(buttonDivisao, selected)
+}
+
+function setBtnStateTOSelected(btn, selected) {
+    btn.classList.remove(selected ? "btnNotSelected" : "btnSelected")
+    btn.classList.add(selected ? "btnSelected" : "btnNotSelected")
 }
