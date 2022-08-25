@@ -1,8 +1,24 @@
 const display = document.getElementById('display')
-let primeiroNumero = ""
-let segundoNumero = ""
-let operacaoSelecionada = ""
+let primeiroNumero;
+let segundoNumero;
+let operacaoSelecionada;
 
+
+
+
+setInitialState()
+bindNumeros()
+bindOperacoes()
+
+
+
+function setInitialState() {
+    operacaoSelecionada =""
+    primeiroNumero = ""
+    segundoNumero = ""
+    display.value = ""
+    display.placeholder = "0"
+}
 
 function bindNumeros() {
     const numbersContainer = document.getElementById('numeros')  
@@ -22,44 +38,22 @@ function clickAtBtn(number) {
 }
     
 
-bindNumeros()
 
-const buttonSoma = document.getElementById('btn_+')
-buttonSoma.addEventListener('click', clicouButtonSoma)
-
-function clicouButtonSoma() {
-   operacaoSelecionada = "+"
-   setBtnSomaStateToSelectedStyle(true)
-   saveDisplayToPrimeiroNumero()
+function bindOperacoes() {
+    const operacoesContainer = document.getElementById('operacoes')  
+    for(const btnOperacao of operacoesContainer.children) {
+        btnOperacao.addEventListener('click', clickOperacaoBtnEvent)
+    }
 }
 
-const buttonSubtracao = document.getElementById('btn_-')
-buttonSubtracao.addEventListener('click', clicouButtonSubtracao)
-
-function clicouButtonSubtracao( ) {
-    operacaoSelecionada = "-"
-    setBtnSubtracaoStateToSelectedStyle(true)
-    saveDisplayToPrimeiroNumero()
-    
-}
-
-const buttonMultiplicacao = document.getElementById('btn_x')
-buttonMultiplicacao.addEventListener('click', clicouButtonMultiplicacao)
-
-function clicouButtonMultiplicacao() {
-    operacaoSelecionada = "x"
-    setBtnMultiplicacaoStateToSelectedStyle(true)
+function clickOperacaoBtnEvent(event) {
+    operacaoSelecionada = event.target.innerText
+    setBtnStateTOSelected(event.target, true)
     saveDisplayToPrimeiroNumero()
 }
 
-const buttonDivisao = document.getElementById('btn_/')
-buttonDivisao.addEventListener('click', clicouButtonDivisao)
 
-function clicouButtonDivisao() {
-    operacaoSelecionada = "/"
-    setBtnDivisaoStateToSelectedStyle(true)
-    saveDisplayToPrimeiroNumero()
-}
+
 
 function saveDisplayToPrimeiroNumero() {
     primeiroNumero = display.value
@@ -112,32 +106,17 @@ const buttonClear = document.getElementById('btn_c')
 buttonClear.addEventListener('click', clicouButtonClear)
 
 function clicouButtonClear() {
-    operacaoSelecionada =""
-    primeiroNumero = ""
-    segundoNumero = ""
-    display.value = ""
-    display.placeholder = "0"
-
-    setBtnSomaStateToSelectedStyle(false)
-    setBtnSubtracaoStateToSelectedStyle(false)
-    setBtnMultiplicacaoStateToSelectedStyle(false)
-    setBtnDivisaoStateToSelectedStyle(false)
-
-
+    setInitialState()
+    resetBtnsOperacoesState()
 }
 
-function setBtnSomaStateToSelectedStyle(selected) {
-    setBtnStateTOSelected(buttonSoma, selected)
+function resetBtnsOperacoesState() {
+    const operacoesContainer = document.getElementById('operacoes')  
+    for(const btnOperacao of operacoesContainer.children) {
+        setBtnStateTOSelected(btnOperacao, false)
+    }
 }
-function setBtnSubtracaoStateToSelectedStyle(selected) {
-    setBtnStateTOSelected(buttonSubtracao, selected)
-}
-function setBtnMultiplicacaoStateToSelectedStyle(selected) {
-    setBtnStateTOSelected(buttonMultiplicacao, selected)
-}
-function setBtnDivisaoStateToSelectedStyle(selected) {
-    setBtnStateTOSelected(buttonDivisao, selected)
-}
+
 
 function setBtnStateTOSelected(btn, selected) {
     btn.classList.remove(selected ? "btnNotSelected" : "btnSelected")
