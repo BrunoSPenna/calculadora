@@ -63,10 +63,12 @@ const buttonDivisao = document.getElementById('btn_/')
 buttonDivisao.addEventListener('click', clicouButtonDivisao)
 
 function clicouButtonDivisao() {
-    window.alert("divisão")
-
+    primeiroNumero = display.value
+    operacaoSelecionada = "/"
+    setBtnDivisaoStateToSelectedStyle(true)
+    display.value = ""
+    display.placeholder = primeiroNumero
 }
-
 
 const buttonIgual = document.getElementById('btn_=')
 buttonIgual.addEventListener('click', clicouButtonIgual)
@@ -83,7 +85,11 @@ function clicouButtonIgual() {
     }else if( operacaoSelecionada === "x") {
         let resultado = parseInt(primeiroNumero) * parseInt(segundoNumero)
         primeiroNumero = resultado
+    } else if(operacaoSelecionada === "/") {
+        let resultado = parseInt(primeiroNumero) / parseInt(segundoNumero)
+        primeiroNumero = resultado
     }
+    
     
 
     
@@ -104,7 +110,8 @@ function clicouButtonClear() {
 
     setBtnSomaStateToSelectedStyle(false)
     setBtnSubtracaoStateToSelectedStyle(false)
-    setBtnMumtiplicacaoStateToSelectedStyle(false)
+    setBtnMultiplicacaoStateToSelectedStyle(false)
+    setBtnDivisaoStateToSelectedStyle(false)
 
 
 }
@@ -120,4 +127,8 @@ function setBtnSubtracaoStateToSelectedStyle(selected) {
 function setBtnMultiplicacaoStateToSelectedStyle(selected) {
     buttonMultiplicacao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
     buttonMultiplicacao.classList.add(selected ? "btnSelected" : "btnNotSelected")
+}
+function setBtnDivisaoStateToSelectedStyle(selected) {
+    buttonDivisao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
+    buttonDivisao.classList.add(selected ? "btnSelected" : "btnNotSelected")
 }
