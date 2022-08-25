@@ -52,7 +52,11 @@ const buttonMultiplicacao = document.getElementById('btn_x')
 buttonMultiplicacao.addEventListener('click', clicouButtonMultiplicacao)
 
 function clicouButtonMultiplicacao() {
-    window.alert("multiplicaçao")
+    primeiroNumero = display.value
+    operacaoSelecionada = "x"
+    setBtnMultiplicacaoStateToSelectedStyle(true)
+    display.value = ""
+    display.placeholder = primeiroNumero
 }
 
 const buttonDivisao = document.getElementById('btn_/')
@@ -76,6 +80,9 @@ function clicouButtonIgual() {
     }else if( operacaoSelecionada === "-") {
         let resultado = parseInt(primeiroNumero) - parseInt(segundoNumero)
         primeiroNumero = resultado
+    }else if( operacaoSelecionada === "x") {
+        let resultado = parseInt(primeiroNumero) * parseInt(segundoNumero)
+        primeiroNumero = resultado
     }
     
 
@@ -97,6 +104,8 @@ function clicouButtonClear() {
 
     setBtnSomaStateToSelectedStyle(false)
     setBtnSubtracaoStateToSelectedStyle(false)
+    setBtnMumtiplicacaoStateToSelectedStyle(false)
+
 
 }
 
@@ -107,4 +116,8 @@ function setBtnSomaStateToSelectedStyle(selected) {
 function setBtnSubtracaoStateToSelectedStyle(selected) {
     buttonSubtracao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
     buttonSubtracao.classList.add(selected ? "btnSelected" : "btnNotSelected")
+}
+function setBtnMultiplicacaoStateToSelectedStyle(selected) {
+    buttonMultiplicacao.classList.remove(selected ? "btnNotSelected" : "btnSelected")
+    buttonMultiplicacao.classList.add(selected ? "btnSelected" : "btnNotSelected")
 }
